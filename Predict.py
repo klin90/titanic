@@ -54,6 +54,6 @@ svm.fit(X_train_s, y_train)
 save_predictions(svm.predict(X_test_s), 'svm')
 
 # fit random forest classifier and save predictions
-rf = RandomForestClassifier(n_estimators=400, max_depth=8)
+rf = RandomForestClassifier(n_estimators=400, max_depth=7, max_features=5)
 rf.fit(X_train_e, y_train)
 save_predictions(rf.predict(X_test_e), 'forest')

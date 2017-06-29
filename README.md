@@ -8,16 +8,16 @@ My analysis of the Kaggle Titanic Dataset
 * Imputes missing `Age` values with median based on sex and passenger class.
 * Transform `SibSp` and `Parch` into `FamSize` feature by taking a sum.
 * Scores:
-    * Random Forest: 0.79904 with `n_estimators=300` and `max-depth=6`.
-    * Logistic Regression: 0.77512 with `degree=3` and `C=0.005`.
-    * SVM: 0.77033 with `gamma='auto'` and `C=3`.
+    * Random Forest: 0.79904 with `n_estimators=300, max-depth=6`.
+    * Logistic Regression: 0.77512 with `degree=3, C=0.005`.
+    * SVM: 0.77033 with `gamma='auto', C=3`.
 
 #### v1.1:
 * Median values are calculated using both train and test sets, instead of just train set.
 * Scores:
-    * Random Forest: 0.78947 with `n_estimators=400` and `max-depth=7`.
-    * Logistic Regression: 0.77033 with `degree=3` and `C=0.003`.
-    * SVM: 0.78947 with `gamma='auto'` and `C=1`.
+    * Random Forest: 0.78947 with `n_estimators=400, max-depth=7`.
+    * Logistic Regression: 0.77033 with `degree=3, C=0.003`.
+    * SVM: 0.78947 with `gamma='auto', C=1`.
 
 #### v1.2:
 * Fare transformation now takes median by passenger class and embark location.
@@ -25,11 +25,11 @@ My analysis of the Kaggle Titanic Dataset
 * Scores:
     * Random Forest: 0.79426 with `n_estimators=400` and `max-depth=6`.
     * Logistic Regression: 0.76555 with `degree=2` and `C=0.03`.
-    * SVM: 0.77033 with `gamma='auto'` and `C=3`.
+    * SVM: 0.77033 with `gamma='auto', C=3`.
 
 #### v1.3:
-* Add 1 to `FamSize` and used logarithm transform on `Fare`
+* Add 1 to `FamSize` and log-transformed `Fare`. Changed `max_features` for random forests.
 * Scores:
-    * Random Forest: 0 with `n_estimators=400` and `max-depth=8`.
-    * Logistic Regression: 0 with `degree=2` and `C=0.03`.
-    * SVM: 0 with `gamma='auto'` and `C=30`.
+    * Random Forest: 0 with `n_estimators=400, max_features=5, max-depth=7`.
+    * Logistic Regression: 0 with `degree=2, C=0.03`.
+    * SVM: 0 with `gamma='auto', C=30`.
