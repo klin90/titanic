@@ -31,10 +31,10 @@ def logistic_grid():
     poly = PolynomialFeatures(include_bias=True)
     lgr = LogisticRegression()
     poly_lgr = Pipeline([('poly_features', poly), ('logistic', lgr)])
-    params = {'poly_features__degree': [2, 3],
-              'logistic__C': [0.0003, 0.001, 0.003, 0.01, 0.03, 0.1, 1, 3]}
+    params = {'poly_features__degree': [2, 3, 4],
+              'logistic__C': [0.003, 0.01, 0.03, 0.1, 1]}
     grid = GridSearchCV(poly_lgr, param_grid=params, cv=10, n_jobs=2).fit(X_s, y)
-    print(grid.cv_results_['mean_test_score'].reshape(8, 2))
+    print(grid.cv_results_['mean_test_score'].reshape(5, 3))
     print('Best Parameters: %s' % grid.best_params_)
 
 
@@ -42,7 +42,7 @@ def logistic_grid():
 def svm_grid():
     """ SVC Grid Search """
     svm = SVC(gamma='auto')
-    params = {'C': [0.1, 0.3, 1, 3, 10, 30]}
+    params = {'C': [3, 10, 30, 100, 300]}
     grid = GridSearchCV(svm, param_grid=params, cv=10, n_jobs=2).fit(X_s, y)
     print(grid.cv_results_['mean_test_score'])
     print('Best Parameters: %s' % grid.best_params_)

@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 train = pd.read_csv('train.csv', index_col='PassengerId')
 test = pd.read_csv('test.csv', index_col='PassengerId')
@@ -21,6 +22,7 @@ df['Embarked'].fillna(value='S', inplace=True)
 
 # transform 'Fare' into difference from median by 'Pclass'
 # impute missing 'Fare' values with 0
+df['Fare'] = df['Fare'].add(1).apply(np.log)
 df['Fare'] = df.groupby('Pclass')['Fare'].apply(lambda x: x.sub(x.median()))
 df['Fare'].fillna(0, inplace=True)
 

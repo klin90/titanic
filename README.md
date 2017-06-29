@@ -28,8 +28,8 @@ My analysis of the Kaggle Titanic Dataset
     * SVM: 0.77033 with `gamma='auto'` and `C=3`.
 
 #### v1.3:
-* Add 1 to `FamSize`.
+* Add 1 to `FamSize` and used logarithm transform on `Fare`
 * Scores:
     * Random Forest: 0 with `n_estimators=400` and `max-depth=8`.
     * Logistic Regression: 0 with `degree=2` and `C=0.03`.
-    * SVM: 0 with `gamma='auto'` and `C=1`.
+    * SVM: 0 with `gamma='auto'` and `C=30`.
