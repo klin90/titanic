@@ -25,7 +25,7 @@ df['Fare'] = df.groupby('Pclass')['Fare'].apply(lambda x: x.sub(x.median()))
 df['Fare'].fillna(0, inplace=True)
 
 # create FamSize feature
-df['FamSize'] = df['SibSp'] + df['Parch']
+df['FamSize'] = df['SibSp'] + df['Parch'] + 1
 df.drop(['SibSp', 'Parch'], axis=1, inplace=True)
 
 # split X train and test

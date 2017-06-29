@@ -49,11 +49,11 @@ poly_lgr.fit(X_train_s, y_train)
 save_predictions(poly_lgr.predict(X_test_s), 'logistic')
 
 # fit SVM classifier and save predictions
-svm = SVC(C=3, gamma='auto')
+svm = SVC(C=1, gamma='auto')
 svm.fit(X_train_s, y_train)
 save_predictions(svm.predict(X_test_s), 'svm')
 
 # fit random forest classifier and save predictions
-rf = RandomForestClassifier(n_estimators=400, max_depth=6)
+rf = RandomForestClassifier(n_estimators=400, max_depth=8)
 rf.fit(X_train_e, y_train)
 save_predictions(rf.predict(X_test_e), 'forest')
