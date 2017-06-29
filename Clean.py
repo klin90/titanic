@@ -13,16 +13,16 @@ df = X_train.append(test)
 # drop unused columns
 df.drop(['Name', 'Ticket', 'Cabin'], axis=1, inplace=True)
 
-# transform 'Fare' into difference from median by 'Pclass'
-# impute missing 'Fare' values with 0
-df['Fare'] = df.groupby('Pclass')['Fare'].apply(lambda x: x.sub(x.median()))
-df['Fare'].fillna(0, inplace=True)
-
 # impute missing 'Age' values with median by 'Sex', 'Pclass'
 df['Age'] = df.groupby(['Sex', 'Pclass'])['Age'].apply(lambda x: x.fillna(x.median()))
 
 # impute missing 'Embarked' values with 'S' (most frequent)
 df['Embarked'].fillna(value='S', inplace=True)
+
+# transform 'Fare' into difference from median by 'Pclass'
+# impute missing 'Fare' values with 0
+df['Fare'] = df.groupby('Pclass')['Fare'].apply(lambda x: x.sub(x.median()))
+df['Fare'].fillna(0, inplace=True)
 
 # create FamSize feature
 df['FamSize'] = df['SibSp'] + df['Parch']

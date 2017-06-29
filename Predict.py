@@ -24,10 +24,10 @@ y_train = train['Survived']
 
 # combine,
 tr_len = len(X_train)
-X = X_train.append(test)
+X_e = X_train.append(test)
 
 # create dummies, split, scale
-X_d = pd.get_dummies(X, columns=['Sex', 'Pclass', 'Embarked'])
+X_d = pd.get_dummies(X_e, columns=['Sex', 'Pclass', 'Embarked'])
 X_train_d = X_d[:tr_len]
 X_test_d = X_d[tr_len:]
 scaler = StandardScaler()
@@ -36,24 +36,24 @@ X_test_s = scaler.transform(X_test_d)
 
 # encode categorical variables
 le = LabelEncoder()
-X['Sex'] = le.fit_transform(X['Sex'])
-X['Embarked'] = le.fit_transform(X['Embarked'])
-X_train_e = X[:tr_len]
-X_test_e = X[tr_len:]
+X_e['Sex'] = le.fit_transform(X_e['Sex'])
+X_e['Embarked'] = le.fit_transform(X_e['Embarked'])
+X_train_e = X_e[:tr_len]
+X_test_e = X_e[tr_len:]
 
 # fit logistic polynomial regression and save predictions
-poly = PolynomialFeatures(degree=3, include_bias=True)
-lgr = LogisticRegression(C=0.003)
+poly = PolynomialFeatures(degree=2, include_bias=True)
+lgr = LogisticRegression(C=0.03)
 poly_lgr = Pipeline([('poly_features', poly), ('logistic', lgr)])
 poly_lgr.fit(X_train_s, y_train)
 save_predictions(poly_lgr.predict(X_test_s), 'logistic')
 
 # fit SVM classifier and save predictions
-svm = SVC(C=1, gamma='auto')
+svm = SVC(C=3, gamma='auto')
 svm.fit(X_train_s, y_train)
 save_predictions(svm.predict(X_test_s), 'svm')
 
 # fit random forest classifier and save predictions
-rf = RandomForestClassifier(n_estimators=400, max_depth=7)
+rf = RandomForestClassifier(n_estimators=400, max_depth=6)
 rf.fit(X_train_e, y_train)
 save_predictions(rf.predict(X_test_e), 'forest')
