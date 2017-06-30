@@ -42,18 +42,18 @@ X_train_e = X_e[:tr_len]
 X_test_e = X_e[tr_len:]
 
 # fit logistic polynomial regression and save predictions
-poly = PolynomialFeatures(degree=2, include_bias=True)
-lgr = LogisticRegression(C=0.03)
+poly = PolynomialFeatures(degree=3, include_bias=True)
+lgr = LogisticRegression(C=0.005)
 poly_lgr = Pipeline([('poly_features', poly), ('logistic', lgr)])
 poly_lgr.fit(X_train_s, y_train)
 save_predictions(poly_lgr.predict(X_test_s), 'logistic')
 
 # fit SVM classifier and save predictions
-svm = SVC(C=30, gamma='auto')
+svm = SVC(C=3, gamma='auto')
 svm.fit(X_train_s, y_train)
 save_predictions(svm.predict(X_test_s), 'svm')
 
 # fit random forest classifier and save predictions
-rf = RandomForestClassifier(n_estimators=400, max_depth=7, max_features=5)
+rf = RandomForestClassifier(n_estimators=400, max_depth=4, max_features=4)
 rf.fit(X_train_e, y_train)
 save_predictions(rf.predict(X_test_e), 'forest')

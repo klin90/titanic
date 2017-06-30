@@ -30,6 +30,6 @@ My analysis of the Kaggle Titanic Dataset
 #### v1.3:
 * Add 1 to `FamSize` and log-transformed `Fare`. Changed `max_features` for random forests.
 * Scores:
-    * Random Forest: 0 with `n_estimators=400, max_features=5, max-depth=7`.
-    * Logistic Regression: 0 with `degree=2, C=0.03`.
-    * SVM: 0 with `gamma='auto', C=30`.
+    * Random Forest: 0.79426 with `n_estimators=400, max_features=4, max-depth=5`.
+    * Logistic Regression: 0.77033 with `degree=2, C=0.03`.
+    * SVM: 0.77990 with `gamma='auto', C=3`.
