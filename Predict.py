@@ -43,7 +43,7 @@ X_test_e = X_e[tr_len:]
 
 # fit logistic polynomial regression and save predictions
 poly = PolynomialFeatures(degree=3, include_bias=True)
-lgr = LogisticRegression(C=0.005)
+lgr = LogisticRegression(C=0.003)
 poly_lgr = Pipeline([('poly_features', poly), ('logistic', lgr)])
 poly_lgr.fit(X_train_s, y_train)
 save_predictions(poly_lgr.predict(X_test_s), 'logistic')
@@ -54,6 +54,6 @@ svm.fit(X_train_s, y_train)
 save_predictions(svm.predict(X_test_s), 'svm')
 
 # fit random forest classifier and save predictions
-rf = RandomForestClassifier(n_estimators=400, max_depth=4, max_features=4)
+rf = RandomForestClassifier(n_estimators=500, max_depth=7, max_features=4)
 rf.fit(X_train_e, y_train)
 save_predictions(rf.predict(X_test_e), 'forest')
