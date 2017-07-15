@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 
 train = pd.read_csv('train.csv', index_col='PassengerId')
 test = pd.read_csv('test.csv', index_col='PassengerId')
@@ -11,24 +10,34 @@ X_train = train.drop('Survived', axis=1)
 tr_len = len(X_train)
 df = X_train.append(test)
 
-# drop unused columns
-df.drop(['Name', 'Ticket', 'Cabin'], axis=1, inplace=True)
-
-# impute missing 'Age' values with median by 'Sex', 'Pclass'
-df['Age'] = df.groupby(['Sex', 'Pclass'])['Age'].apply(lambda x: x.fillna(x.median()))
-
-# impute missing 'Embarked' values with 'S' (most frequent)
-df['Embarked'].fillna(value='S', inplace=True)
-
-# transform 'Fare' into difference from median by 'Pclass'
-# impute missing 'Fare' values with 0
-df['Fare'] = df['Fare'].add(1).apply(np.log)
-df['Fare'] = df.groupby('Pclass')['Fare'].apply(lambda x: x.sub(x.median()))
-df['Fare'].fillna(0, inplace=True)
+# create 'Title' feature
+df['Title'] = df['Name'].str.extract('\,\s(.*?)[.]', expand=False)
+df['Title'].replace('Mme', 'Mrs', inplace=True)
+df['Title'].replace('Mlle', 'Miss', inplace=True)
+df['Title'].replace('Ms', 'Miss', inplace=True)
+df['Title'].replace('Lady', 'fNoble', inplace=True)
+df['Title'].replace('the Countess', 'fNoble', inplace=True)
+df['Title'].replace('Dona', 'fNoble', inplace=True)
+df['Title'].replace('Don', 'mNoble', inplace=True)
+df['Title'].replace('Sir', 'mNoble', inplace=True)
+df['Title'].replace('Jonkheer', 'mNoble', inplace=True)
+df['Title'].replace('Col', 'mil', inplace=True)
+df['Title'].replace('Capt', 'mil', inplace=True)
+df['Title'].replace('Major', 'mil', inplace=True)
 
 # create FamSize feature
 df['FamSize'] = df['SibSp'] + df['Parch'] + 1
-df.drop(['SibSp', 'Parch'], axis=1, inplace=True)
+
+# impute missing 'Age' values with median by 'Title', 'Sex'
+df['Age'] = df.groupby(['Sex', 'Title'])['Age'].apply(lambda x: x.fillna(x.median()))
+
+# create 'TicketSize' and 'Fare' features
+df['TicketSize'] = df['Ticket'].value_counts()[df['Ticket']].values
+df['Fare'] = df['Fare'].div(df['TicketSize'])
+df['Fare'] = df.groupby('Pclass')['Fare'].apply(lambda x: x.fillna(x.median()))
+
+# drop unused features
+df.drop(['Name', 'SibSp', 'Parch', 'Ticket', 'Cabin', 'Embarked'], axis=1, inplace=True)
 
 # split X train and test
 X_train = df[:tr_len]

@@ -13,23 +13,26 @@ My analysis of the Kaggle Titanic Dataset
     * SVM: 0.77033 with `gamma='auto', C=3`.
 
 #### v1.1:
-* Median values are calculated using both train and test sets, instead of just train set.
+* Imputed using the median from both the train and test sets, instead of just the train set.
 * Scores:
     * Random Forest: 0.78947 with `n_estimators=400, max-depth=7`.
     * Logistic Regression: 0.77033 with `degree=3, C=0.003`.
     * SVM: 0.78947 with `gamma='auto', C=1`.
 
-#### v1.2:
-* Fare transformation now takes median by passenger class and embark location.
-* No improvement, reverting back to v1.1.
-* Scores:
-    * Random Forest: 0.79426 with `n_estimators=400` and `max-depth=6`.
-    * Logistic Regression: 0.76555 with `degree=2` and `C=0.03`.
-    * SVM: 0.77033 with `gamma='auto', C=3`.
-
 #### v1.3:
-* Add 1 to `FamSize` and log-transformed `Fare`. Changed `max_features` for random forests.
+* Added 1 to `FamSize` and log transformed `Fare`. Added `max_features` parameters for random forests.
 * Scores:
     * Random Forest: 0.79426 with `n_estimators=400, max_features=4, max-depth=5`.
     * Logistic Regression: 0.77033 with `degree=2, C=0.03`.
     * SVM: 0.77990 with `gamma='auto', C=3`.
+
+#### v2.0:
+* Create a `Title` feature from `Name`.
+* Create a `TicketSize` feature: Size of each group sharing a `Ticket` number.
+* Divide `Fare` by `TicketSize`.
+* Impute `Age` values using median, grouped by `Title` and `Sex`.
+* Transform `SibSp` and `Parch` into `FamSize` by addition.
+* Drop `Embarked` and `Cabin` features.
+
+#### v2.1:
+* Dropped `TicketSize` feature from the model.

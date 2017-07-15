@@ -7,3 +7,7 @@
 .idea/vcs.xml
 .idea/workspace.xml
 .ipynb_checkpoints/Explore-checkpoint.ipynb
+old/Clean_v13.py
+old/Predict_v13.py
+old/Validate_v13.py
+.ipynb_checkpoints/Engineer-checkpoint.ipynb

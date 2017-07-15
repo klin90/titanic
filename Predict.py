@@ -27,7 +27,7 @@ tr_len = len(X_train)
 X_e = X_train.append(test)
 
 # create dummies, split, scale
-X_d = pd.get_dummies(X_e, columns=['Sex', 'Pclass', 'Embarked'])
+X_d = pd.get_dummies(X_e, columns=['Sex', 'Pclass', 'Title', 'FamSize'])
 X_train_d = X_d[:tr_len]
 X_test_d = X_d[tr_len:]
 scaler = StandardScaler()
@@ -37,7 +37,7 @@ X_test_s = scaler.transform(X_test_d)
 # encode categorical variables
 le = LabelEncoder()
 X_e['Sex'] = le.fit_transform(X_e['Sex'])
-X_e['Embarked'] = le.fit_transform(X_e['Embarked'])
+X_e['Title'] = le.fit_transform(X_e['Title'])
 X_train_e = X_e[:tr_len]
 X_test_e = X_e[tr_len:]
 
@@ -54,6 +54,6 @@ svm.fit(X_train_s, y_train)
 save_predictions(svm.predict(X_test_s), 'svm')
 
 # fit random forest classifier and save predictions
-rf = RandomForestClassifier(n_estimators=500, max_depth=7, max_features=4)
+rf = RandomForestClassifier(n_estimators=1000, max_depth=7, max_features=5)
 rf.fit(X_train_e, y_train)
 save_predictions(rf.predict(X_test_e), 'forest')

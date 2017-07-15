@@ -20,7 +20,7 @@ def log_grid_search(params):
 
 def rf_grid_search(params):
     """ Runs a grid search for random forest with given parameters. """
-    grid = GridSearchCV(rf, param_grid=params, cv=10).fit(X_s, y)
+    grid = GridSearchCV(rf, param_grid=params, cv=10).fit(X_e, y)
     print(grid.cv_results_['mean_test_score'].reshape(len(params['max_depth']),
                                                       len(params['max_features'])))
     print(grid.cv_results_['std_test_score'].reshape(len(params['max_depth']),
@@ -40,14 +40,14 @@ X_e = df.drop('Survived', axis=1)
 y = df['Survived']
 
 # create dummies, split, scale
-X_d = pd.get_dummies(X_e, columns=['Sex', 'Pclass', 'Embarked'])
+X_d = pd.get_dummies(X_e, columns=['Sex', 'Pclass', 'Title', 'FamSize'])
 scaler = StandardScaler()
 X_s = scaler.fit_transform(X_d)
 
 # encode categorical variables
 le = LabelEncoder()
 X_e['Sex'] = le.fit_transform(X_e['Sex'])
-X_e['Embarked'] = le.fit_transform(X_e['Embarked'])
+X_e['Title'] = le.fit_transform(X_e['Title'])
 
 # logistic regression
 poly = PolynomialFeatures(include_bias=True)
