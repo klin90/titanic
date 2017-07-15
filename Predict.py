@@ -22,12 +22,12 @@ test = pd.read_csv('cl_test.csv', index_col='PassengerId')
 X_train = train.drop('Survived', axis=1)
 y_train = train['Survived']
 
-# combine,
+# combine for pre-processing
 tr_len = len(X_train)
 X_e = X_train.append(test)
 
 # create dummies, split, scale
-X_d = pd.get_dummies(X_e, columns=['Sex', 'Pclass', 'Title', 'FamSize'])
+X_d = pd.get_dummies(X_e, columns=['Sex', 'Pclass', 'Title'])
 X_train_d = X_d[:tr_len]
 X_test_d = X_d[tr_len:]
 scaler = StandardScaler()
@@ -45,15 +45,15 @@ X_test_e = X_e[tr_len:]
 poly = PolynomialFeatures(degree=3, include_bias=True)
 lgr = LogisticRegression(C=0.003)
 poly_lgr = Pipeline([('poly_features', poly), ('logistic', lgr)])
-poly_lgr.fit(X_train_s, y_train)
-save_predictions(poly_lgr.predict(X_test_s), 'logistic')
+# poly_lgr.fit(X_train_s, y_train)
+# save_predictions(poly_lgr.predict(X_test_s), 'logistic')
 
 # fit SVM classifier and save predictions
 svm = SVC(C=3, gamma='auto')
-svm.fit(X_train_s, y_train)
-save_predictions(svm.predict(X_test_s), 'svm')
+# svm.fit(X_train_s, y_train)
+# save_predictions(svm.predict(X_test_s), 'svm')
 
 # fit random forest classifier and save predictions
-rf = RandomForestClassifier(n_estimators=1000, max_depth=7, max_features=5)
+rf = RandomForestClassifier(n_estimators=1500, max_depth=4, max_features=3)
 rf.fit(X_train_e, y_train)
 save_predictions(rf.predict(X_test_e), 'forest')

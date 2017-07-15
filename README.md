@@ -27,12 +27,12 @@ My analysis of the Kaggle Titanic Dataset
     * SVM: 0.77990 with `gamma='auto', C=3`.
 
 #### v2.0:
-* Create a `Title` feature from `Name`.
+* Create a `Title` feature from `Name`. Then drop `Name`.
 * Create a `TicketSize` feature: Size of each group sharing a `Ticket` number.
-* Divide `Fare` by `TicketSize`.
+    * Divide `Fare` by `TicketSize` to get per-person fare.
+    * Then drop `TicketSize` and `Ticket`.
 * Impute `Age` values using median, grouped by `Title` and `Sex`.
+    * Then create a `Child` feature and drop `Age`.
 * Transform `SibSp` and `Parch` into `FamSize` by addition.
-* Drop `Embarked` and `Cabin` features.
-
-#### v2.1:
-* Dropped `TicketSize` feature from the model.
+    * Then transform `FamSize` into `LargeFam` and `SmallFam` indicators.
+* Drop the `Embarked` and `Cabin` features.
